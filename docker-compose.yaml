@@ -1,0 +1,27 @@
+#docker-compose run aws-cli
+# virtualenv test-env
+# . test-env/bin/activate
+# pip3 list
+# aws s3 ls
+# aws configure
+# aws ec2 describe-instances
+version: '3'
+services:
+  aws-cli:
+    image: spannozzo/aws:1.1.0
+    build:
+      context: .
+    container_name: my-aws-cli
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    environment:
+    - AWS_PROFILE=aws-cli #commands will apply role associate to this profile
+    volumes:
+      - ./aws:/root/.aws
+    networks:
+      - aws
+networks:
+  aws:
+    external: false
+    
